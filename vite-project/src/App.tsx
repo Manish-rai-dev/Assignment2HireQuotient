@@ -62,7 +62,7 @@ const App: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [filteredUsers, setFilteredUsers] = useState<User[]>([]);
   const [editingKey, setEditingKey] = useState<string>('');
-  const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([]);
+  const [selectedRowKeys, setSelectedRowKeys] = useState<number[]>([]);
 
   useEffect(() => {
     axios
@@ -123,9 +123,10 @@ const App: React.FC = () => {
     }
   };
 
-  const onSelectChange = (selectedKeys: string[]) => {
-    setSelectedRowKeys(selectedKeys);
+  const onSelectChange = (selectedKeys: React.Key[]) => {
+    setSelectedRowKeys(selectedKeys.map((key) => Number(key)));
   };
+  
 
   const rowSelection = {
     selectedRowKeys,
@@ -134,7 +135,7 @@ const App: React.FC = () => {
   };
 
   const handleDeleteSelected = () => {
-    const newData = filteredUsers.filter((user) => !selectedRowKeys.includes(user.id));
+    const newData = filteredUsers.filter((user) => !selectedRowKeys.includes(parseInt(user.id, 10)));
     setFilteredUsers(newData);
     setSelectedRowKeys([]);
   };
@@ -168,7 +169,7 @@ const App: React.FC = () => {
     {
       title: 'Action',
       dataIndex: 'action',
-      render: (_, record: User) => {
+      render: (_:unknown, record: User) => {
         const editable = isEditing(record);
         return editable ? (
           <Space size="middle">
