@@ -4,7 +4,7 @@ import axios from 'axios';
 import { IoSaveOutline } from 'react-icons/io5';
 import { RiFileEditFill, RiDeleteBin5Line } from 'react-icons/ri';
 import { GiCancel } from 'react-icons/gi';
-
+import "./App.css"
 const { Search } = Input;
 
 interface User {
@@ -202,8 +202,11 @@ const App: React.FC = () => {
         onSearch={handleSearch}
         style={{ marginBottom: 16, width: '30%', textAlign: 'center', marginLeft: '35%' }}
       />
-      <div style={{ marginBottom: 16 }}>
-        <Button
+      <div style={{ marginBottom: 16 , display:"flex",flexDirection: "row-reverse",}}>
+        <div style={{justifyContent:"flex-end"}}>
+
+        
+        <Button 
           type="primary"
           onClick={handleDeleteSelected}
           disabled={selectedRowKeys.length === 0}
@@ -211,6 +214,7 @@ const App: React.FC = () => {
         >
           Delete Selected
         </Button>
+        </div>
       </div>
       <Form form={form} component={false}>
         <Table
